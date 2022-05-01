@@ -1,37 +1,36 @@
-import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import { useHistory, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { registerNewUserThunk } from '../slice';
-
+import React from "react";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import { useHistory, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { registerNewUserThunk } from "../slice";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
   submit: {
@@ -57,7 +56,7 @@ export function UserFormActions(props) {
       >
         Sign Up
       </Button>
-      <Grid container justify="flex-end">
+      <Grid container justifyContent="flex-end">
         <Grid item>
           <Link href="/login" variant="body2">
             Already have an account? Sign in
@@ -65,7 +64,7 @@ export function UserFormActions(props) {
         </Grid>
       </Grid>
     </>
-  )
+  );
 }
 export function UserDetailForm(props) {
   const classes = useStyles();
@@ -74,22 +73,22 @@ export function UserDetailForm(props) {
   const validations = (element) => {
     switch (element) {
       case "username": {
-        return formdata.username.length < 10 ? true : false;
+        return formdata?.username?.length < 10 ? true : false;
       }
       case "mobile": {
-        return formdata.mobile.length === 9;
+        return formdata?.mobile?.length === 9;
       }
       default: {
         return false;
       }
     }
-  }
+  };
   const handleChange = (e, element) => {
     setFormdata({
       ...formdata,
-      [element]: e.target.value
-    })
-  }
+      [element]: e.target.value,
+    });
+  };
   return (
     <form className={classes.form} noValidate>
       <Grid container spacing={2}>
@@ -106,7 +105,9 @@ export function UserDetailForm(props) {
             error={validations("username")}
             onChange={(e) => handleChange(e, "username")}
             value={formdata.username}
-            helperText={validations("username") ? "Minimum character length is 10" : ""}
+            helperText={
+              validations("username") ? "Minimum character length is 10" : ""
+            }
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -167,9 +168,24 @@ export function UserDetailForm(props) {
           />
         </Grid>
         <Grid item xs={6}>
-          <RadioGroup row aria-label="position" name="position" defaultValue={formdata.gender} value={formdata.gender} onChange={(e) => handleChange(e, "gender")}>
-            <FormControlLabel value="MALE" control={<Radio color="primary" />} label="Male" />
-            <FormControlLabel value="FEMALE" control={<Radio color="primary" />} label="Female" />
+          <RadioGroup
+            row
+            aria-label="position"
+            name="position"
+            defaultValue={formdata.gender}
+            value={formdata.gender}
+            onChange={(e) => handleChange(e, "gender")}
+          >
+            <FormControlLabel
+              value="MALE"
+              control={<Radio color="primary" />}
+              label="Male"
+            />
+            <FormControlLabel
+              value="FEMALE"
+              control={<Radio color="primary" />}
+              label="Female"
+            />
           </RadioGroup>
         </Grid>
         <Grid item xs={6}>
@@ -181,8 +197,8 @@ export function UserDetailForm(props) {
               onChange={(e) => handleChange(e, "role")}
               label="role"
               inputProps={{
-                name: 'role',
-                id: 'outlined-age-native-simple',
+                name: "role",
+                id: "outlined-age-native-simple",
               }}
             >
               <option aria-label="None" value="" />
@@ -191,12 +207,9 @@ export function UserDetailForm(props) {
             </Select>
           </FormControl>
         </Grid>
-
       </Grid>
-
     </form>
-
-  )
+  );
 }
 export default function SignUp(props) {
   const classes = useStyles();
@@ -210,13 +223,13 @@ export default function SignUp(props) {
     gender: "MALE",
     role: "USER",
     mobile: "",
-    password: ""
+    password: "",
   });
   const dispatch = useDispatch();
   const handleSubmit = () => {
     dispatch(registerNewUserThunk(formdata));
     history.replace(from);
-  }
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -226,7 +239,6 @@ export default function SignUp(props) {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-
       </div>
       <UserDetailForm formdata={formdata} setFormdata={setFormdata} />
       <UserFormActions handleSubmit={handleSubmit} />
